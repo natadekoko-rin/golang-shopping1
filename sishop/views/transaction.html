@@ -7,8 +7,8 @@
 		<thead>
 		  <tr>
 			<th scope="col">ID</th>
-			<th scope="col">Nama Product</th>
-			<th scope="col">Image</th>
+			<th scope="col">Nama Produk</th>
+			<th scope="col">Gambar</th>
 			<th scope="col">Harga</th>
 			<th scope="col">Status</th>
 			<th scope="col">Actions</th>
@@ -20,15 +20,25 @@
 				<th scope="row">{{.Id}}</th>
 				<td>{{.Name}}</td>
 				<td><img src="/public/images/{{ .Image }}" width="70" height="100%" alt="{{ .Name }}"/></td>
-				<td>{{.Price}}</td>
+				<td>Rp.{{.Price}}</td>
 				<td>{{.Status}}</td>
 				<td>
           <!-- ======hiden post====== -->
-      <!-- ====================== -->
-					
+          <!-- <form method="POST" action="/transactions/bayar/{{.Id}}" class="mt-4">
+            <input type="hidden" name="idproduct" class="form-control" id="idproduct" value="{{.IdProduct}}"/>
+            <input type="hidden" name="image" class="form-control" id="image" value="{{.Image }}"/>
+            <input type="hidden" name="name" class="form-control" id="name" value="{{.Name }}"/>
+            <input type="hidden" name="price" class="form-control" id="price" value="{{.Price }}"/>
+            <input type="hidden" name="status" class="form-control" id="status" value="Bayar"/>
+            <small class="text-muted"> 
+              <button type="submit" class="btn btn-success">Bayar</button>
+            </small>
+          </form> -->
+					<a href="/transactions/delete/{{.Id}}" class="btn btn-danger" onclick="return confirm('yakin Anda Menghapus Transaksi{{ .Name }}?')">Hapus</a>  
+          <!-- ====================== -->
+					&nbsp;
 					<a href="/transaction/bayar/{.Id}" type="button" class="btn btn-outline-success">BAYAR</a>
 					&nbsp;
-					<a href="/transactions/delete/{{.Id}}" class="btn btn-danger" onclick="return confirm('yakin Anda Menghapus Transaksi{{ .Name }}?')">Hapus</a>  
 				</td>
 			</tr>
 

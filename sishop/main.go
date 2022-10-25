@@ -84,16 +84,16 @@ func main(){
 
 	}, transController.DeleteTransactionById)
 
-	trans.Post("/bayar/:id", func(c *fiber.Ctx) error {
-		sess, _ := store.Get(c)
-		val := sess.Get("username")
-		if val != nil {
-			return c.Next()
-		}
+	// trans.Post("/bayar/:id", func(c *fiber.Ctx) error {
+	// 	sess, _ := store.Get(c)
+	// 	val := sess.Get("username")
+	// 	if val != nil {
+	// 		return c.Next()
+	// 	}
 
-		return c.Redirect("/login")
+	// 	return c.Redirect("/login")
 
-	}, transController.BayarTransactionById)
+	// }, transController.BayarTransactionById)
 
 
 app.Listen(":3000")
