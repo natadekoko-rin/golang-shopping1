@@ -1,0 +1,48 @@
+{{template "partials/header" .}}
+
+<h1>Daftar Produk</h1>
+<br>
+<a href="/products/create" class="btn btn-primary">Tambah Produk</a>
+<a href="transactions/" class="btn btn-primary">Keranjang</a>
+<!-- <a href="#" class="btn btn-primary">Transaksi</a> -->
+
+
+<div>
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th scope="col">#</th>
+			<th scope="col">Nama Produk</th>
+			<th scope="col">Harga</th>
+			<th scope="col">Actions</th>
+			<!-- <th scope="col">Detail</th> -->
+
+		  </tr>
+		</thead>
+		<tbody>
+			{{range .Products}}
+			<tr>
+				<th scope="row">{{.Id}}</th>
+				<td>{{.Name}}</td>
+				<td>Rp. {{.Price}}</td>
+				<td>
+          <!-- <a href="/edit/productdetail?id={{.Id}}" class="btn btn-outline-info">
+						Masukkan Keranjang</a>
+					&nbsp; -->
+          <a href="/products/productdetail?id={{.Id}}" class="btn btn-outline-info">
+						Detail</a>
+					&nbsp;
+					<a href="/products/editproduct/{{.Id}}" class="btn btn-outline-info">
+						Edit</a>
+					&nbsp;
+					<!-- <a href="/products/deleteproduct/{{.Id}}" class="btn btn-outline-info">
+							Hapus</a> -->
+				</td>
+			</tr>
+		  {{end}}
+		  
+		</tbody>
+	  </table>
+</div>
+
+{{template "partials/footer" .}}

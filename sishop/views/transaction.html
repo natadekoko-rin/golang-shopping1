@@ -1,0 +1,38 @@
+{{template "partials/header" .}}
+
+<!-- <h1>Daftar Transaksi</h1> -->
+<br>
+<div>
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nama Product</th>
+			<th scope="col">Image</th>
+			<th scope="col">Harga</th>
+			<th scope="col">Status</th>
+			<th scope="col">Actions</th>
+		  </tr>
+		</thead>
+		<tbody>
+			{{range .Transactions}}
+			<tr>
+				<th scope="row">{{.Id}}</th>
+				<td>{{.Name}}</td>
+				<td><img src="/public/images/{{ .Image }}" width="70" height="100%" alt="{{ .Name }}"/></td>
+				<!-- <td>{{.Price}}</td> -->
+				<td>{{.Status}}</td>
+				<td>
+					
+					<a href="/bayar/<%=item.id %>" type="button" class="btn btn-outline-success">BAYAR</a>
+					&nbsp;
+					<a href="/transactions/delete/{{.Id}}" class="btn btn-danger" onclick="return confirm('yakin Anda Menghapus Transaksi{{ .Name }}?')">Hapus</a>  
+				</td>
+			</tr>
+		  {{end}}
+		  
+		</tbody>
+	  </table>
+</div>
+
+{{template "partials/footer" .}}
