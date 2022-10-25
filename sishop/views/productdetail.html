@@ -6,7 +6,7 @@
 <br>
   <!-- <p>Image at the top (card-img-top):</p> -->
   <div class="card" style="width:400px">
-    <img class="card-img-top" src="/public/images/{{ .Product.Image }}" alt="Card image" style="width:100%">
+    <img class="card-img-top" src="/public/images/{{.Product.Image }}" alt="Card image" style="width:100%">
     <div class="card-body">
       <h4 class="card-title">Nama Produk : {{.Product.Name}}</h4>
       <h4 class="card-title">Harga Produk : {{.Product.Price}}</h4>
@@ -18,11 +18,11 @@
 
       <!-- ======hiden post====== -->
       <form method="POST" action="/transactions/create" class="mt-4">
-        <input type="hidden" name="idproduck" class="form-control" id="id" value="{{ .id }}"/>
-        <input type="hidden" name="image" class="form-control" id="image" value="{{ .Image }}"/>
-        <input type="hidden" name="name" class="form-control" id="name" value="{{ .Name }}"/>
+        <input type="hidden" name="idproduct" class="form-control" id="idproduct" value="{{.Product.Id}}"/>
+        <input type="hidden" name="image" class="form-control" id="image" value="{{.Product.Image }}"/>
+        <input type="hidden" name="name" class="form-control" id="name" value="{{.Product.Name }}"/>
         <!-- <input type="hidden" name="quantity" class="form-control" id="judul" value="{{ .Quantity }}"/> -->
-        <input type="hidden" name="price" class="form-control" id="judul" value="{{ .Price }}"/>
+        <input type="hidden" name="price" class="form-control" id="price" value="{{.Product.Price }}"/>
         <input type="hidden" name="status" class="form-control" id="status" value="Belum Bayar"/>
         <small class="text-muted"> <button type="submit" class="btn btn-success">
           Masukkan Keranjang</button></small>

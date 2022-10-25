@@ -20,15 +20,19 @@
 				<th scope="row">{{.Id}}</th>
 				<td>{{.Name}}</td>
 				<td><img src="/public/images/{{ .Image }}" width="70" height="100%" alt="{{ .Name }}"/></td>
-				<!-- <td>{{.Price}}</td> -->
+				<td>{{.Price}}</td>
 				<td>{{.Status}}</td>
 				<td>
+          <!-- ======hiden post====== -->
+      <!-- ====================== -->
 					
-					<a href="/bayar/<%=item.id %>" type="button" class="btn btn-outline-success">BAYAR</a>
+					<a href="/transaction/bayar/{.Id}" type="button" class="btn btn-outline-success">BAYAR</a>
 					&nbsp;
 					<a href="/transactions/delete/{{.Id}}" class="btn btn-danger" onclick="return confirm('yakin Anda Menghapus Transaksi{{ .Name }}?')">Hapus</a>  
 				</td>
 			</tr>
+
+
 		  {{end}}
 		  
 		</tbody>
