@@ -7,6 +7,8 @@ import (
 
 	"rin/sishop/controllers"
 
+	"github.com/gofiber/swagger"
+
 )
 
 func main(){
@@ -18,11 +20,20 @@ func main(){
 		Views: engine,
 	})
 
+	app.Get("/swagger/*", swagger.HandlerDefault)
+
 	app.Static("/public", "./public")
 
 	authController := controllers.InitAuthController(store)
 	prodController:=controllers.InitProductController()
 	transController:=controllers.InitTransactionController(store)
+	// ==
+	prodControllerApi := controllers.InitProductControllerApi()
+	authControllerApi := controllers.InitAuthControllerApi()
+
+	app.Post("/login", authControllerApi.LoginPosted)
+	app.Post("/register", authControllerApi.AddRegisteredUser)
+
 
 	app.Get("/login", authController.Login)
 	app.Post("/login", authController.LoginPosted)
@@ -94,6 +105,8 @@ func main(){
 	// 	return c.Redirect("/login")
 
 	// }, transController.BayarTransactionById)
+
+	
 
 
 app.Listen(":3000")
