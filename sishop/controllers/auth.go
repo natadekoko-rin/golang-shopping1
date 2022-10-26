@@ -15,7 +15,7 @@ type LoginController struct{
 	store *session.Store
 }
 
-type LoginForm struct{
+type LoginForm struct{//buat login dan regis
 	Username string `form:"username" validation:"required"`
 	Password string `form:"password" validation:"required"`
 }
@@ -28,12 +28,12 @@ func InitAuthController(s *session.Store) *LoginController{
 }
 
 //GET Login
-func (controller *LoginController) Login(c *fiber.Ctx) error {
-	return c.Render("login", fiber.Map{
-		"Title": "SiShop",
-		"Content": "Login",
-	})
-}
+// func (controller *LoginController) Login(c *fiber.Ctx) error {
+// 	return c.Render("login", fiber.Map{
+// 		"Title": "SiShop",
+// 		"Content": "Login",
+// 	})
+// }
 
 //POST Login
 func (controller *LoginController) LoginPosted(c *fiber.Ctx) error {
@@ -46,16 +46,19 @@ func (controller *LoginController) LoginPosted(c *fiber.Ctx) error {
 	var user models.User
 	var myform LoginForm
 	if err := c.BodyParser(&myform); err != nil {
-		// fmt.Println(err)
-		return c.Redirect("/login")
+		
+		fmt.Println(err)
+		return c.JSON(fiber.Map{
+			"status":  400,
+			"message": "Bad Request, Pastikan form terisi komplit",
+		})
 	}
-	fmt.Println(c.BodyParser(&myform))
-	fmt.Println(user)
 
 	er := models.FindByUsername(controller.Db, &user, myform.Username)
-	fmt.Println(er)
 	if er != nil {
-		return c.Redirect("/login") // http 500 internal server error
+			return c.JSON(fiber.Map{
+				"message": "User tidak ditemukan",
+			})
 	}
 
 	// hardcode auth
@@ -65,18 +68,23 @@ func (controller *LoginController) LoginPosted(c *fiber.Ctx) error {
 		sess.Set("userID", user.Id)
 		sess.Save()
 
-		return c.Redirect("/products")
+		return c.JSON(fiber.Map{
+			"message": "Login sukses",
+		})
 	}
-	return c.Redirect("/login")
+	return c.JSON(fiber.Map{
+		"status":  401,
+		"message": "Register dahulu",
+	})
 
 }
 
 //GET Register
-func (controller *LoginController) Register(c *fiber.Ctx) error {
-	return c.Render("register", fiber.Map{
-		"Title": "Register",
-	})
-}
+// func (controller *LoginController) Register(c *fiber.Ctx) error {
+// 	return c.Render("register", fiber.Map{
+// 		"Title": "Register",
+// 	})
+// }
 
 //POST Register
 func (controller *LoginController) RegisterPosted(c *fiber.Ctx) error {
@@ -84,7 +92,10 @@ func (controller *LoginController) RegisterPosted(c *fiber.Ctx) error {
 	var encpass LoginForm
 
 	if err := c.BodyParser(&myform); err != nil {
-		return c.Redirect("/login")
+		return c.JSON(fiber.Map{
+			"status":  400,
+			"message": "Bad Request, Pastikan data terisi komplit",
+		})
 	}
 
 	// fmt.Println(myform)
@@ -92,16 +103,20 @@ func (controller *LoginController) RegisterPosted(c *fiber.Ctx) error {
 
 	encpassword, _ := bcrypt.GenerateFromPassword([]byte(encpass.Password), 10)
 	xHash := string(encpassword)
-	fmt.Println(xHash)
+	// fmt.Println(xHash)
 	myform.Password = xHash
 	// fmt.Println(myform)
 
 	err := models.CreateUser(controller.Db, &myform)
 	if err != nil {
-		return c.Redirect("/login")
+		return c.JSON(fiber.Map{
+			"message": "Gagal menyimpan user",
+		})
 	}
 	// if succeed
-	return c.Redirect("/login")
+	return c.JSON(fiber.Map{
+		"message": "User berhasil dibuat",
+	})
 }
 
 //Profile
@@ -125,7 +140,7 @@ func (controller *LoginController) Logout (c *fiber.Ctx)error {
 	}
 	sess.Destroy()
 
-	return c.Render("login",fiber.Map{
-		"Title": "Login",
+	return c.JSON(fiber.Map{
+		"message": "Berhasil Logout",
 	})
 }

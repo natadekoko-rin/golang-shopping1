@@ -7,7 +7,7 @@ import (
 
 	"rin/sishop/controllers"
 
-	"github.com/gofiber/swagger"
+	// "github.com/gofiber/swagger"
 
 )
 
@@ -20,7 +20,7 @@ func main(){
 		Views: engine,
 	})
 
-	app.Get("/swagger/*", swagger.HandlerDefault)
+	// app.Get("/swagger/*", swagger.HandlerDefault)
 
 	app.Static("/public", "./public")
 
@@ -28,27 +28,27 @@ func main(){
 	prodController:=controllers.InitProductController()
 	transController:=controllers.InitTransactionController(store)
 	// ==
-	prodControllerApi := controllers.InitProductControllerApi()
-	authControllerApi := controllers.InitAuthControllerApi()
+	// prodControllerApi := controllers.InitProductControllerApi()
+	// authControllerApi := controllers.InitAuthControllerApi()
 
-	app.Post("/login", authControllerApi.LoginPosted)
-	app.Post("/register", authControllerApi.AddRegisteredUser)
+	// app.Post("/login", authControllerApi.LoginPosted)
+	// app.Post("/register", authControllerApi.AddRegisteredUser)
 
 
-	app.Get("/login", authController.Login)
+	// app.Get("/login", authController.Login)
 	app.Post("/login", authController.LoginPosted)
-	app.Get("/register", authController.Register)
+	// app.Get("/register", authController.Register)
 	app.Post("/register", authController.RegisterPosted)
 	app.Get("/profile",authController.Profile)
 	app.Get("/logout", authController.Logout)
 
 	prod := app.Group("/products")
 	prod.Get("/", prodController.IndexProduct)//semua produk
-	prod.Get("/create", prodController.AddProduct)
+	// prod.Get("/create", prodController.AddProduct)
 	prod.Post("/create", prodController.AddProductPosted)
 	prod.Get("/productdetail/", prodController.DetailProduct)
 	// prod.Get("/detail/:id", prodController.DetailProduct2)
-	prod.Get("/editproduct/:id", prodController.EditProduct)
+	// prod.Get("/editproduct/:id", prodController.EditProduct)
 	prod.Post("/editproduct/:id", prodController.EditProductPosted)
 	prod.Get("/deleteproduct/:id", prodController.DeleteProduct)
 
